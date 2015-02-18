@@ -56,7 +56,7 @@ public class GET_UserTweets {
 			ArrayList<String> followers =f.findByFollowing(id);
 			
 			for(int count=0;count<followers.size();count+=200) {
-				ArrayList<String> subF = (ArrayList<String>) followers.subList(count, count+=200);
+				ArrayList<String> subF = new ArrayList<String>(followers.subList(count, count+=200));
 				getUserTweets(subF);
 				try {
 					TimeUnit.MINUTES.sleep(15);
@@ -136,13 +136,7 @@ public class GET_UserTweets {
 			} catch (Exception e) {
 				e.printStackTrace();
 			} 
-			//user2tweets.put(id, tweets);
-			/*try {
-				TimeUnit.MINUTES.sleep(5);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}*/
+			
 		}
 		//return user2tweets;
 	}

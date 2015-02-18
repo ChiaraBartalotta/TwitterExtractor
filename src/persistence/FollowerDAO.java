@@ -54,7 +54,7 @@ public class FollowerDAO implements FollowerRepository {
 			statement.setLong(1,Long.parseLong(userFollowing));
 			ResultSet result = statement.executeQuery();
 			while(result.next()){
-				followers.add(" "+result.getLong("follower")+"" );
+				followers.add(""+result.getLong("follower")+"" );
 			}
 			
 			return followers;
