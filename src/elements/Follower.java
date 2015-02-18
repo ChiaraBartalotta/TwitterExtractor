@@ -1,18 +1,18 @@
 package elements;
 
 public class Follower {
-	long followingId;
-	long followerId;
-	public long getFollowingId() {
+	String followingId;
+	String followerId;
+	public String getFollowingId() {
 		return followingId;
 	}
-	public void setFollowingId(long followingId) {
+	public void setFollowingId(String followingId) {
 		this.followingId = followingId;
 	}
-	public long getFollowerId() {
+	public String getFollowerId() {
 		return followerId;
 	}
-	public void setFollowerId(long followerId) {
+	public void setFollowerId(String followerId) {
 		this.followerId = followerId;
 	}
 }

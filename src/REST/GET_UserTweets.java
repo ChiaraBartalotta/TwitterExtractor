@@ -3,6 +3,7 @@ package REST;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 
 import oauth.signpost.OAuthConsumer;
 
@@ -19,6 +20,8 @@ import elements.Tweet;
 import elements.UserMentions;
 import util.HttpResponseManager;
 import util.OAuth_Utility;
+import persistence.FollowerDAO;
+import persistence.FollowerRepository;
 import persistence.HashtagRepository;
 import persistence.TweetDAO;
 import persistence.TweetRepository;
@@ -30,18 +33,51 @@ public class GET_UserTweets {
 	public final static void main(String[] args) {
 		ArrayList<String> ids = new ArrayList<String>();
 		ids.add("877730558");
-		getUserTweets(ids);
+		ids.add("368947547");
+		ids.add("14068446");
+		ids.add("23240695");
+		ids.add("40090727");
+		ids.add("63881465");
+		ids.add("66792123");
+		ids.add("76736871");
+		ids.add("156576211");
+		ids.add("191721901");
+		ids.add("192854350");
+		ids.add("221332544");
+		ids.add("236857407");
+		ids.add("277460126");
+		ids.add("283070184");
+		ids.add("336975968");
+		ids.add("408384407");
+		ids.add("429847277");
+		ids.add("529338144");
+		for(String id: ids) {
+			FollowerRepository f = new FollowerDAO();
+			ArrayList<String> followers =f.findByFollowing(id);
+			
+			for(int count=0;count<followers.size();count+=200) {
+				ArrayList<String> subF = (ArrayList<String>) followers.subList(count, count+=200);
+				getUserTweets(subF);
+				try {
+					TimeUnit.MINUTES.sleep(15);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 
-	public static HashMap<String,ArrayList<Tweet>> getUserTweets(ArrayList<String> ids){
-		HashMap<String,ArrayList<Tweet>> user2tweets = new HashMap<String,ArrayList<Tweet>>();
+	public static void getUserTweets(ArrayList<String> ids){
+		//HashMap<String,ArrayList<Tweet>> user2tweets = new HashMap<String,ArrayList<Tweet>>();
 		HttpClient httpClient = new DefaultHttpClient();
 		OAuth_Utility auth_utility = new OAuth_Utility();
 		OAuthConsumer consumer = auth_utility.getAuthenticatedConsumer();
 		for(String id: ids) {
 			ArrayList<Tweet> tweets = new ArrayList<Tweet>();
-
+			
 			try {
+				
 				String result ="";
 				HttpGet httpGetRequest = new HttpGet("https://api.twitter.com/1.1/statuses/user_timeline.json?user_id="+id+"&count=4000&trim_user=1");
 				consumer.sign(httpGetRequest);
@@ -100,9 +136,15 @@ public class GET_UserTweets {
 			} catch (Exception e) {
 				e.printStackTrace();
 			} 
-			user2tweets.put(id, tweets);
+			//user2tweets.put(id, tweets);
+			/*try {
+				TimeUnit.MINUTES.sleep(5);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}*/
 		}
-		return user2tweets;
+		//return user2tweets;
 	}
 
 }
