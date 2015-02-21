@@ -21,6 +21,9 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import elements.Follower;
+import persistence.FollowerDAO;
+import persistence.FollowerRepository;
 import util.HttpResponseManager;
 import util.OAuth_Utility;
 
@@ -46,17 +49,13 @@ public class GET_UserFollower {
 		//ids.add("408384407");
 		//ids.add("429847277");
 		//ids.add("529338144");
-		HashMap<String,ArrayList<String>> follower = getFollower(ids);
+		ids.add("200925880");
+		getFollower(ids);
 
-		try {
-			map2DB(follower);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 
 	}
-	public static HashMap<String,ArrayList<String>> getFollower(ArrayList<String> ids){
+	public static void getFollower(ArrayList<String> ids){
 
 		HashMap<String,ArrayList<String>> following2follower = new HashMap<String,ArrayList<String>>();
 		HttpClient httpClient = new DefaultHttpClient();
@@ -68,7 +67,6 @@ public class GET_UserFollower {
 			try {
 				long cursor = -1;
 				String result ="";
-				int cont=0;
 				while(cursor!=0) {
 					HttpGet httpGetRequest = new HttpGet("https://api.twitter.com/1.1/followers/ids.json?user_id="+id+"&cursor="+cursor);
 					consumer.sign(httpGetRequest);
@@ -88,8 +86,9 @@ public class GET_UserFollower {
 						
 						for(int i=0;i<a.length();i++){
 							follower.add(a.get(i).toString());
-							cont++;
-							//System.out.println(a.get(i).toString());
+							FollowerRepository fr = new FollowerDAO();
+							Follower f = new Follower(id,a.get(i).toString());
+							fr.insert(f);
 						}
 						cursor=obj.getLong("next_cursor");
 
@@ -102,34 +101,34 @@ public class GET_UserFollower {
 			following2follower.put(id, follower);
 		}
 		System.out.println(following2follower.toString());
-		return following2follower;
+		//return following2follower;
 	}
-	public static void map2DB(HashMap<String,ArrayList<String>> mp) throws IOException {
-		Iterator it = mp.entrySet().iterator();
-		int cont=0;
-		File file = new File("./FOLLOWER.txt");
-		 
-		// if file doesnt exists, then create it
-		if (!file.exists()) {
-			file.createNewFile();
-		}
-
-		FileWriter fw = new FileWriter(file.getAbsoluteFile());
-		BufferedWriter bw = new BufferedWriter(fw);
-		
-		while (it.hasNext()) {
-			Map.Entry pairs = (Map.Entry)it.next();
-			Iterator itValue = ((ArrayList<String>) pairs.getValue()).iterator();
-			while(itValue.hasNext()){
-				cont++;
-				bw.write("INSERT INTO follower VALUES ("+pairs.getKey() + "," + itValue.next()+");");
-				//System.out.println("INSERT INTO follower VALUES ("+pairs.getKey() + "," + itValue.next()+");");
-			}
-
-			it.remove(); // avoids a ConcurrentModificationException
-		}
-		bw.close();
-		System.out.println("done");
-	}
+//	public static void map2DB(HashMap<String,ArrayList<String>> mp) throws IOException {
+//		Iterator it = mp.entrySet().iterator();
+//		int cont=0;
+//		File file = new File("./FOLLOWER.txt");
+//		 
+//		// if file doesnt exists, then create it
+//		if (!file.exists()) {
+//			file.createNewFile();
+//		}
+//
+//		FileWriter fw = new FileWriter(file.getAbsoluteFile());
+//		BufferedWriter bw = new BufferedWriter(fw);
+//		
+//		while (it.hasNext()) {
+//			Map.Entry pairs = (Map.Entry)it.next();
+//			Iterator itValue = ((ArrayList<String>) pairs.getValue()).iterator();
+//			while(itValue.hasNext()){
+//				cont++;
+//				bw.write("INSERT INTO follower VALUES ("+pairs.getKey() + "," + itValue.next()+");");
+//				//System.out.println("INSERT INTO follower VALUES ("+pairs.getKey() + "," + itValue.next()+");");
+//			}
+//
+//			it.remove(); // avoids a ConcurrentModificationException
+//		}
+//		bw.close();
+//		System.out.println("done");
+//	}
 }
 

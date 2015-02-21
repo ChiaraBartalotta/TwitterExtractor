@@ -53,7 +53,7 @@ public class GET_UserTweets {
 		ids.add("529338144");
 		for(String id: ids) {
 			FollowerRepository f = new FollowerDAO();
-			ArrayList<String> followers =f.findByFollowing(id);
+			ArrayList<String> followers =f.findFollower(id);
 			
 			for(int count=0;count<followers.size();count+=200) {
 				ArrayList<String> subF = new ArrayList<String>(followers.subList(count, count+=200));

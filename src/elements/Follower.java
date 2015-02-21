@@ -1,6 +1,11 @@
 package elements;
 
 public class Follower {
+	public Follower(String followingId, String followerId) {
+		super();
+		this.followingId = followingId;
+		this.followerId = followerId;
+	}
 	String followingId;
 	String followerId;
 	public String getFollowingId() {
