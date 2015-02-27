@@ -1,4 +1,4 @@
-package REST;
+package main;
 import java.io.*;
 
 import org.apache.http.HttpEntity;
@@ -29,7 +29,7 @@ public class TestRestGET {
       consumer.setTokenWithSecret(AccessToken, AccessSecret);
     HttpClient httpClient = new DefaultHttpClient();
     try {
-      HttpGet httpGetRequest = new HttpGet("https://api.twitter.com/1.1/users/lookup.json?user_id=283070184");
+      HttpGet httpGetRequest = new HttpGet("https://api.twitter.com/1.1/statuses/show.json?id=567361233184366594");
       consumer.sign(httpGetRequest);
       HttpResponse httpResponse = httpClient.execute(httpGetRequest);
  

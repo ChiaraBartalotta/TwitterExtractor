@@ -12,9 +12,10 @@ public class Tweet {
 	String text;
 	int retweet_count;
 	int favourite_count;
+	String retweeted_id;
 	
 	public Tweet(String id, String user_id, String created_at, String text, int retweet_count,
-			int favourite_count) {
+			int favourite_count, String retweeted_id) {
 		super();
 		this.id = id;
 		this.user_id = user_id;
@@ -22,6 +23,7 @@ public class Tweet {
 		this.text = text;
 		this.retweet_count = retweet_count;
 		this.favourite_count = favourite_count;
+		this.retweeted_id = retweeted_id;
 	}
 	
 	public String getId() {
@@ -81,5 +83,13 @@ public class Tweet {
 				+ created_at + ", hashtag=" + hashtag.toString() + ", user_mentions="
 				+ user_mentions.toString() + ", text=" + text + ", retweet_count="
 				+ retweet_count + ", favourite_count=" + favourite_count + "\n\n]";
+	}
+
+	public String getRetweeted_id() {
+		return retweeted_id;
+	}
+
+	public void setRetweeted_id(String retweeted_id) {
+		this.retweeted_id = retweeted_id;
 	}
 }

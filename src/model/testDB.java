@@ -17,8 +17,8 @@ import elements.UserMentions;
 
 public class testDB {
 	public static void main(String args[])  {
-		FollowerRepository fr = new FollowerDAO();
-		ArrayList<String> f = fr.findFollowing("877730558");
+		TweetRepository fr = new TweetDAO();
+		ArrayList<String> f = fr.findRetweetId();
 		for(int i=0;i<f.size();i++) {
 			System.out.println("id="+f.get(i)+";");
 			

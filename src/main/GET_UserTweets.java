@@ -1,4 +1,4 @@
-package REST;
+package main;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -51,21 +51,22 @@ public class GET_UserTweets {
 		ids.add("408384407");
 		ids.add("429847277");
 		ids.add("529338144");
-		for(String id: ids) {
-			FollowerRepository f = new FollowerDAO();
-			ArrayList<String> followers =f.findFollower(id);
-			
-			for(int count=0;count<followers.size();count+=200) {
-				ArrayList<String> subF = new ArrayList<String>(followers.subList(count, count+=200));
-				getUserTweets(subF);
-				try {
-					TimeUnit.MINUTES.sleep(15);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		}
+		getUserTweets(ids);
+//		for(String id: ids) {
+//			FollowerRepository f = new FollowerDAO();
+//			ArrayList<String> followers =f.findFollower(id);
+//			
+//			for(int count=0;count<followers.size();count+=200) {
+//				ArrayList<String> subF = new ArrayList<String>(followers.subList(count, count+=200));
+//				getUserTweets(subF);
+//				try {
+//					TimeUnit.MINUTES.sleep(15);
+//				} catch (InterruptedException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//			}
+//		}
 	}
 
 	public static void getUserTweets(ArrayList<String> ids){
@@ -102,9 +103,13 @@ public class GET_UserTweets {
 						String userId = jobj.getJSONObject("user").getString("id_str");
 						String created_at = jobj.getString("created_at");
 						String text = jobj.getString("text");
+						String retweeted_id = "0";
+						if(jobj.has("retweeted_status")) {
+							retweeted_id = jobj.getJSONObject("retweeted_status").getString("id_str");
+						}
 						int retweet_count = jobj.getInt("retweet_count");
 						int favourite_count = jobj.getInt("favorite_count");
-						Tweet tweet = new Tweet(tweetId, userId, created_at, text, retweet_count, favourite_count);
+						Tweet tweet = new Tweet(tweetId, userId, created_at, text, retweet_count, favourite_count, retweeted_id);
 						TweetRepository trep = new TweetDAO();
 						trep.insert(tweet);
 						JSONArray ht = jobj.getJSONObject("entities").getJSONArray("hashtags");
