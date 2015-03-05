@@ -19,20 +19,18 @@ public class RelationshipGraph {
 		FollowerRepository fr = new FollowerDAO();
 		ArrayList<String> follower = fr.findAllFollower();
 		ArrayList<String> following = fr.findAllFollowing();
+		
 		for(String f : follower) {
 			if(!relationship.containsKey(f)) {
 				relationship.put(f, new HashSet<String>());
-				
 			}
-			for(String fing : fr.findFollower(f)) 
+			for(String fing : fr.findFollower(f)) {
 				relationship.get(f).add(fing);
-		}
-		for(String f : following) {
-			if(!relationship.containsKey(f)) {
-				relationship.put(f, new HashSet<String>());
+				if(!relationship.containsKey(fing)) {
+					relationship.put(fing, new HashSet<String>());
+				}
+				relationship.get(fing).add(f);
 			}
-			for(String fing : fr.findFollower(f)) 
-				relationship.get(f).add(fing);
 		}
 		try {
 			 

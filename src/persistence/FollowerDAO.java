@@ -119,7 +119,7 @@ public class FollowerDAO implements FollowerRepository {
 		DataSource datasource = new DataSource();
 		Connection connection=null;
 		ArrayList<String> followers = new ArrayList<String>();
-		String select = "select follower from follower";
+		String select = "select distinct follower from follower";
 		PreparedStatement statement=null;
 		try {
 			connection = datasource.getConnection();
@@ -155,7 +155,7 @@ public class FollowerDAO implements FollowerRepository {
 		DataSource datasource = new DataSource();
 		Connection connection=null;
 		ArrayList<String> followers = new ArrayList<String>();
-		String select = "select following from follower";
+		String select = "select distinct following from follower";
 		PreparedStatement statement=null;
 		try {
 			connection = datasource.getConnection();
