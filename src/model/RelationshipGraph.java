@@ -1,5 +1,9 @@
 package model;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -29,6 +33,24 @@ public class RelationshipGraph {
 			}
 			for(String fing : fr.findFollower(f)) 
 				relationship.get(f).add(fing);
+		}
+		try {
+			 
+		File file = new File("/users/mkyong/filename.txt");
+		 
+		// if file doesnt exists, then create it
+		if (!file.exists()) {
+			file.createNewFile();
+		}
+
+		FileWriter fw = new FileWriter(file.getAbsoluteFile());
+		BufferedWriter bw = new BufferedWriter(fw);
+		bw.write(relationship.toString());
+		bw.close();
+
+		System.out.println("Done");
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 		return relationship;
 	}
