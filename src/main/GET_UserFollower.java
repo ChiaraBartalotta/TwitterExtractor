@@ -103,32 +103,6 @@ public class GET_UserFollower {
 		System.out.println(following2follower.toString());
 		//return following2follower;
 	}
-//	public static void map2DB(HashMap<String,ArrayList<String>> mp) throws IOException {
-//		Iterator it = mp.entrySet().iterator();
-//		int cont=0;
-//		File file = new File("./FOLLOWER.txt");
-//		 
-//		// if file doesnt exists, then create it
-//		if (!file.exists()) {
-//			file.createNewFile();
-//		}
-//
-//		FileWriter fw = new FileWriter(file.getAbsoluteFile());
-//		BufferedWriter bw = new BufferedWriter(fw);
-//		
-//		while (it.hasNext()) {
-//			Map.Entry pairs = (Map.Entry)it.next();
-//			Iterator itValue = ((ArrayList<String>) pairs.getValue()).iterator();
-//			while(itValue.hasNext()){
-//				cont++;
-//				bw.write("INSERT INTO follower VALUES ("+pairs.getKey() + "," + itValue.next()+");");
-//				//System.out.println("INSERT INTO follower VALUES ("+pairs.getKey() + "," + itValue.next()+");");
-//			}
-//
-//			it.remove(); // avoids a ConcurrentModificationException
-//		}
-//		bw.close();
-//		System.out.println("done");
-//	}
+
 }
 

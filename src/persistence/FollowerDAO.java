@@ -114,5 +114,77 @@ public class FollowerDAO implements FollowerRepository {
 			}
 		}
 	}
+	@Override
+	public ArrayList<String> findAllFollower() {
+		DataSource datasource = new DataSource();
+		Connection connection=null;
+		ArrayList<String> followers = new ArrayList<String>();
+		String select = "select follower from follower";
+		PreparedStatement statement=null;
+		try {
+			connection = datasource.getConnection();
+			statement = connection.prepareStatement(select);
+			ResultSet result = statement.executeQuery();
+			while(result.next()){
+				followers.add(String.valueOf(result.getLong("follower")));
+			}
+			
+			return followers;
+		} 
+		catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		} catch (PersistenceException e) {
+			e.printStackTrace();
+			return null;
+		}
+		finally {
+			try {
+				if (statement != null) 
+					statement.close();
+				if (connection!= null)
+					connection.close();
+			} 
+			catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	@Override
+	public ArrayList<String> findAllFollowing() {
+		DataSource datasource = new DataSource();
+		Connection connection=null;
+		ArrayList<String> followers = new ArrayList<String>();
+		String select = "select following from follower";
+		PreparedStatement statement=null;
+		try {
+			connection = datasource.getConnection();
+			statement = connection.prepareStatement(select);
+			ResultSet result = statement.executeQuery();
+			while(result.next()){
+				followers.add(String.valueOf(result.getLong("following")));
+			}
+			
+			return followers;
+		} 
+		catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		} catch (PersistenceException e) {
+			e.printStackTrace();
+			return null;
+		}
+		finally {
+			try {
+				if (statement != null) 
+					statement.close();
+				if (connection!= null)
+					connection.close();
+			} 
+			catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 
 }
