@@ -8,17 +8,21 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
+import org.json.simple.JSONObject;
+
 import persistence.FollowerDAO;
 import persistence.FollowerRepository;
+import util.FileManager;
+import util.FileManagerInterface;
 
 public class RelationshipGraph {
-	
-	
-	public HashMap<String,HashSet<String>> getGraph() {
+
+
+	public JSONObject getGraph() {
 		HashMap<String,HashSet<String>> relationship = new HashMap <String,HashSet<String>>();
 		FollowerRepository fr = new FollowerDAO();
 		ArrayList<String> follower = fr.findAllFollower();
-		
+
 		for(String f : follower) {
 			if(!relationship.containsKey(f)) {
 				relationship.put(f, new HashSet<String>());
@@ -31,25 +35,10 @@ public class RelationshipGraph {
 				relationship.get(fing).add(f);
 			}
 		}
-		try {
-			 
-		File file = new File("./src/file/graph.txt");
-		 
-		// if file doesnt exists, then create it
-		if (!file.exists()) {
-			file.createNewFile();
-		}
-
-		FileWriter fw = new FileWriter(file.getAbsoluteFile());
-		BufferedWriter bw = new BufferedWriter(fw);
-		bw.write(relationship.toString());
-		bw.close();
-
-		System.out.println("Done");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return relationship;
+		JSONObject jsonRelationship = new JSONObject(relationship);
+		FileManagerInterface ff = new FileManager();
+		ff.createFile("./src/file/graph.txt", jsonRelationship.toJSONString());
+		return jsonRelationship;
 	}
-	
+
 }
