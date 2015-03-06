@@ -33,7 +33,7 @@ public class RelationshipGraph {
 		}
 		try {
 			 
-		File file = new File("./file/graph.txt");
+		File file = new File("./src/file/graph.txt");
 		 
 		// if file doesnt exists, then create it
 		if (!file.exists()) {
