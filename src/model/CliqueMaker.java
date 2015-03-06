@@ -10,6 +10,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.json.simple.JSONObject;
 
 import persistence.CliqueDAO;
+import util.JSON2Object;
 
 public class CliqueMaker {
 	
@@ -21,15 +22,7 @@ public class CliqueMaker {
 	}*/
 	public void makeCliques(JSONObject map) {
 		HashMap<String, HashSet<String>> result; 
-		ObjectMapper mapper = new ObjectMapper();
-		try {
-			result = mapper.readValue(map.toJSONString(), HashMap.class);
-		} catch (JsonGenerationException e) {
-			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		JSON2Object json2Object = new JSON2Object();
+		result = (HashMap<String, HashSet<String>>) json2Object.deserializeObject(map.toJSONString(), HashMap.class);
 	}
 }
