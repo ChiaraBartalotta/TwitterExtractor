@@ -18,7 +18,6 @@ public class RelationshipGraph {
 		HashMap<String,HashSet<String>> relationship = new HashMap <String,HashSet<String>>();
 		FollowerRepository fr = new FollowerDAO();
 		ArrayList<String> follower = fr.findAllFollower();
-		ArrayList<String> following = fr.findAllFollowing();
 		
 		for(String f : follower) {
 			if(!relationship.containsKey(f)) {
@@ -34,7 +33,7 @@ public class RelationshipGraph {
 		}
 		try {
 			 
-		File file = new File("/users/mkyong/filename.txt");
+		File file = new File("./file/graph.txt");
 		 
 		// if file doesnt exists, then create it
 		if (!file.exists()) {
