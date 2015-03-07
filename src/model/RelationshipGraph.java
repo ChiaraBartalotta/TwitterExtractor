@@ -14,11 +14,12 @@ import persistence.FollowerDAO;
 import persistence.FollowerRepository;
 import util.FileManager;
 import util.FileManagerInterface;
+import util.Object2JSON;
 
 public class RelationshipGraph {
 
 
-	public JSONObject getGraph() {
+	/*public JSONObject getGraph() {
 		HashMap<String,HashSet<String>> relationship = new HashMap <String,HashSet<String>>();
 		FollowerRepository fr = new FollowerDAO();
 		ArrayList<String> follower = fr.findAllFollower();
@@ -39,6 +40,29 @@ public class RelationshipGraph {
 		FileManagerInterface ff = new FileManager();
 		ff.createFile("./src/file/graph.txt", jsonRelationship.toJSONString());
 		return jsonRelationship;
+	}*/
+	
+	public UndirectGraph getGraph() {
+		UndirectGraph gg = new UndirectGraph();
+		FollowerRepository fr = new FollowerDAO();
+		ArrayList<String> follower = fr.findAllFollower();
+		for(String f : follower) {
+			if (!gg.containNodeByName(f)) {
+				gg.addVertex(f);
+			}
+			for(String fing : fr.findFollower(f)) {
+				if (!gg.containNodeByName(fing)) {
+					gg.addVertex(fing);
+				}
+				if (!gg.containEdgeByNames(f, fing))
+					gg.addInderectEdge(gg.getMapNameNode().get(f), gg.getMapNameNode().get(fing));
+			}
+		}
+		/*Object2JSON onh = new 
+		JSONObject jsonRelationship = new JSONObject();
+		FileManagerInterface ff = new FileManager();
+		ff.createFile("./src/file/graph.txt", jsonRelationship.toJSONString());*/
+		return gg;
 	}
 
 }
