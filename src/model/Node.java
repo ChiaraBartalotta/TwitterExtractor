@@ -50,6 +50,13 @@ public class Node  {
       node.inEdges.add(e);
       return this;
     }*/
+	
+	@Override
+	public boolean equals(Object obj) {
+		Node e = (Node)obj;
+		return e.getName().equals(this.name);
+	}
+	
     @Override
     public String toString() {
       return name;

@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Comparator;
+
 public class UndirectEdge {
 	private Node n1;
 	private Node n2;
@@ -27,11 +29,11 @@ public class UndirectEdge {
 		this.n2 = to;
 	}
 
-
-
 	@Override
 	public boolean equals(Object obj) {
 		UndirectEdge e = (UndirectEdge)obj;
-		return e.getN1().equals(n1) && e.getN2().equals(n2);
+		return (e.getN1().equals(n1) && e.getN2().equals(n2)) ||
+				(e.getN1().equals(n2) && e.getN2().equals(n1));
 	}
+
 }

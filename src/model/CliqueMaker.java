@@ -2,9 +2,11 @@ package model;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.jgrapht.Graph;
 import org.jgrapht.UndirectedGraph;
@@ -36,13 +38,15 @@ public class CliqueMaker {
 		}
 		return taboo;
 	}*/
-	public void makeCliques(JSONObject map) {
+	public Collection<Set<Node>> makeCliques(UndirectGraph gg) {
 		//BronKerboschCliqueFinder nn = new BronKerboschCliqueFinder();
 		HashMap<String, HashSet<String>> result; 
 		JSON2Object json2Object = new JSON2Object();
-		result = (HashMap<String, HashSet<String>>) json2Object.deserializeObject(map.toJSONString(), HashMap.class);
-		//BronKerboschCliqueFinder<List<String>, List<String>> gg = new BronKerboschCliqueFinder<V, E>(arg0)
-		
+		//result = (HashMap<String, HashSet<String>>) json2Object.deserializeObject(map.toJSONString(), HashMap.class);
+		BronKerboschCliqueFinder<Node, UndirectEdge> fgh = new BronKerboschCliqueFinder<Node, UndirectEdge>(gg);
+		Collection<Set<Node>> nodes = fgh.getAllMaximalCliques();
+		Collection<Set<Node>> nodes2 =  fgh.getBiggestMaximalCliques();
+		return nodes2;
 		
 	}
 }

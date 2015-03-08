@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
+import org.jgrapht.Graph;
 import org.json.simple.JSONObject;
 
 import persistence.FollowerDAO;
@@ -43,19 +44,20 @@ public class RelationshipGraph {
 	}*/
 	
 	public UndirectGraph getGraph() {
+		//Graph<Node, UndirectEdge>  gg = new UndirectGraph();
 		UndirectGraph gg = new UndirectGraph();
 		FollowerRepository fr = new FollowerDAO();
 		ArrayList<String> follower = fr.findAllFollower();
 		for(String f : follower) {
-			if (!gg.containNodeByName(f)) {
-				gg.addVertex(f);
+			if (!gg.containsVertex(new Node(f))) {
+				gg.addVertex(new Node(f));
 			}
 			for(String fing : fr.findFollower(f)) {
-				if (!gg.containNodeByName(fing)) {
-					gg.addVertex(fing);
+				if (!gg.containsVertex(new Node(fing))) {
+					gg.addVertex(new Node(fing));
 				}
-				if (!gg.containEdgeByNames(f, fing))
-					gg.addInderectEdge(gg.getMapNameNode().get(f), gg.getMapNameNode().get(fing));
+				if (!gg.containsEdge(gg.getMapNameNode().get(f), gg.getMapNameNode().get(fing)))
+					gg.addEdge(gg.getMapNameNode().get(f), gg.getMapNameNode().get(fing));
 			}
 		}
 		/*Object2JSON onh = new 
