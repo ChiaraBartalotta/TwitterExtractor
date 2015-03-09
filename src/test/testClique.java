@@ -23,7 +23,6 @@ public class testClique {
 		FileManagerInterface ff = new FileManager();
 		ff.createFile("./src/file/cliqueMaximal.txt", js);
 		System.out.println(js);
-
 	}
 
 }
