@@ -11,13 +11,14 @@ public class HashtagDAO implements HashtagRepository {
 	public boolean insert(Hashtag ht) {
 		DataSource datasource = new DataSource();
 		Connection connection=null;
-		String insert = "insert into hashtag(tweet_id,text) values(?,?)";
+		String insert = "insert into hashtag(tweet_id,text,trend) values(?,?,?)";
 		PreparedStatement statement=null;
 		try {
 			connection = datasource.getConnection();
 			statement = connection.prepareStatement(insert);
 			statement.setLong(1, Long.parseLong(ht.getTweet_id()));
 			statement.setString(2, ht.getText());
+			statement.setString(3, ht.getTrend());
 			return statement.executeUpdate()!=0;
 		} 
 		catch (SQLException e) {

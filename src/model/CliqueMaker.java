@@ -46,7 +46,7 @@ public class CliqueMaker {
 		BronKerboschCliqueFinder<Node, UndirectEdge> fgh = new BronKerboschCliqueFinder<Node, UndirectEdge>(gg);
 		Collection<Set<Node>> nodes = fgh.getAllMaximalCliques();
 		Collection<Set<Node>> nodes2 =  fgh.getBiggestMaximalCliques();
-		return nodes2;
+		return nodes;
 		
 	}
 }

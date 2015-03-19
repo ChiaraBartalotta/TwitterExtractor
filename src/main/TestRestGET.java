@@ -6,6 +6,8 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import oauth.signpost.OAuthConsumer;
 import oauth.signpost.commonshttp.CommonsHttpOAuthConsumer;
@@ -29,14 +31,16 @@ public class TestRestGET {
       consumer.setTokenWithSecret(AccessToken, AccessSecret);
     HttpClient httpClient = new DefaultHttpClient();
     try {
-      HttpGet httpGetRequest = new HttpGet("https://api.twitter.com/1.1/statuses/show.json?id=567361233184366594");
+      HttpGet httpGetRequest = new HttpGet("https://api.twitter.com/1.1/search/tweets.json?q=Rachida&include_entities=true");
       consumer.sign(httpGetRequest);
       HttpResponse httpResponse = httpClient.execute(httpGetRequest);
  
       System.out.println("----------------------------------------");
-      System.out.println(httpResponse.getStatusLine());
+      //System.out.println(httpResponse.getStatusLine());
       System.out.println("----------------------------------------");
- 
+  	JSONObject jot = new JSONObject(httpResponse.getStatusLine());
+	//JSONObject objTweets =  jot.getJSONObject(2).getJSONObject("metadata");
+	System.out.println(jot);
       HttpEntity entity = httpResponse.getEntity();
  
       byte[] buffer = new byte[1024];

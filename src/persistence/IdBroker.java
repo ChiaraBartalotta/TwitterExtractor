@@ -8,11 +8,11 @@ import java.sql.SQLException;
 import java.util.logging.Logger;
 
 public class IdBroker {
-	private static Logger logger = Logger.getLogger("persistence.IdBroker");
+	private  Logger logger = Logger.getLogger("persistence.IdBroker");
 
-	private static final String query = "SELECT nextval('id') AS id";
+	private final String query = "SELECT nextval('id') AS id";
 
-	public static Long getId(Connection connection) {
+	public Long getId(Connection connection) {
 		long id = -1;
 		try {
 			PreparedStatement statement = connection.prepareStatement(query);

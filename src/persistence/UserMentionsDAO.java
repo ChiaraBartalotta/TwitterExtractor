@@ -11,7 +11,7 @@ public class UserMentionsDAO implements UserMentionsRepository {
 	public boolean insert(UserMentions user_mentions) {
 		DataSource datasource = new DataSource();
 		Connection connection=null;
-		String insert = "insert into usermentions(tweet_id,user_id,screen_name) values(?,?,?)";
+		String insert = "insert into usermentions(tweet_id,user_id,screen_name,trend) values(?,?,?,?)";
 		PreparedStatement statement=null;
 		try {
 			connection = datasource.getConnection();
@@ -19,6 +19,7 @@ public class UserMentionsDAO implements UserMentionsRepository {
 			statement.setLong(1, Long.parseLong(user_mentions.getTweet_id()));
 			statement.setLong(2, Long.parseLong(user_mentions.getUser_id()));
 			statement.setString(3, user_mentions.getScreen_name());
+			statement.setString(4, user_mentions.getTrend());
 			return statement.executeUpdate()!=0;
 		} 
 		catch (SQLException e) {
